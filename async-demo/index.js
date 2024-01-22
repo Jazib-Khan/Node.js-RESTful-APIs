@@ -1,20 +1,18 @@
-// Asynchronous version
 console.log('Before');
-getUser(1, (user) => {
-    getRepositories(user.gitHubUsername, (repos) => {
-        getComits(repo, (commits) => {
-            // Callback Hell due to deeply nested structure
-        });
-    })
-});
+getUser(1, (getRepositories));
 console.log('After');
 
-// Synchronous version
-console.log('Before');
-const user = getUser(1);
-const repos = getRepositories(user.gitHubUsername);
-const commits = getCommits(repos[0]);
-console.log('After');
+function getRepositories(user) {
+    getRepositories(user.gitHubUsername, getComits);
+}
+
+function getComits(repos) {
+    getComits(repo, (displayCommits));
+}
+
+function displayCommits(commits) {
+    console.log(commits);
+}
 
 function getUser(id, callback) {
     setTimeout(() => {
