@@ -1,9 +1,19 @@
+// Asynchronous version
 console.log('Before');
 getUser(1, (user) => {
     getRepositories(user.gitHubUsername, (repos) => {
-        console.log('Repos', repos);
+        getComits(repo, (commits) => {
+            // Callback Hell due to deeply nested structure
+        });
     })
 });
+console.log('After');
+
+// Synchronous version
+console.log('Before');
+const user = getUser(1);
+const repos = getRepositories(user.gitHubUsername);
+const commits = getCommits(repos[0]);
 console.log('After');
 
 function getUser(id, callback) {
